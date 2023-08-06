@@ -1,0 +1,7 @@
+**/tags
+**/tags.*
+**/*.o
+**/.DS_Store
+**/bin
+**/a.out
+.vscode
