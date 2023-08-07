@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/05 19:13:25 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/07 11:49:28 by nibenoit         ###   ########.fr       */
+/*   Created: 2023/08/07 12:15:17 by nibenoit          #+#    #+#             */
+/*   Updated: 2023/08/07 12:15:26 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIE_HPP
-# define ZOMBIE_HPP
+#include "HumanB.hpp"
 
-# include <iostream>
-
-class Zombie
+HumanB::HumanB(std::string name)
 {
-	public:
-		Zombie(void);
-		Zombie(std::string name);
-		~Zombie(void);
-		void	announce(void) const;
+	_name = name;
+	_weapon = NULL;
+}
 
-	private:
-		std::string	_name;
-};
+HumanB::~HumanB(void)
+{
+	// TODO
+}
 
-void	randomChump(std::string name);
-Zombie	*newZombie(std::string name);
+void	HumanB::setWeapon(Weapon &weapon)
+{
+	_weapon = &weapon;
+}
 
-#endif
+void	HumanB::attack(void) const
+{
+	if (_weapon == NULL)
+		std::cout << _name << " attacks with their fists\n";
+	else
+		std::cout << _name << " attacks with their " << _weapon->getType() << "\n";
+}
