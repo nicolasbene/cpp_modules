@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:47:51 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/14 17:11:35 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:02:27 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ void	my_main(void)
 
 int	main(void)
 {
-	my_main();
+	given_main();
 	return 0;
 }
