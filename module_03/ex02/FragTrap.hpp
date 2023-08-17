@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/16 11:05:31 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/17 18:54:13 by nibenoit         ###   ########.fr       */
+/*   Created: 2023/08/17 19:23:52 by nibenoit          #+#    #+#             */
+/*   Updated: 2023/08/17 19:25:06 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
+#ifndef FRAG_TRAP_H
+# define FRAG_TRAP_H
 
-int	main(void)
+# include <iostream>
+# include "ClapTrap.hpp"
+
+class	FragTrap: public ClapTrap
 {
-	ClapTrap	ct1("Caro");
-	ClapTrap	ct2("Seb");
-	ScavTrap	st1("Antho");
-	ScavTrap	st2(st1);
-	ScavTrap	st3("Cam");
+	public:
+		FragTrap(void);
+		FragTrap(const FragTrap& fragtrap);
+		~FragTrap(void);
+		FragTrap&	operator=(const FragTrap& fragtrap);
 
-	ct1.attack("Seb");
-	ct2.takeDamage(ct1.getAttack());
-	ct1.attack("Cam");
-	st3.takeDamage(ct1.getAttack());
-	st3.attack("Seb");
-	ct2.takeDamage(st3.getAttack());
-	ct2.beRepaired(10);
-	st1.guardGate();
-	st2.guardGate();
-	return 0;
-}
+		FragTrap(const std::string name);
+
+		void	highFivesGuys(void) const;
+};
+
+#endif

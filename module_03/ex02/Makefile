@@ -9,11 +9,13 @@ OBJ_DIR		= bin
 
 SRCS	= main.cpp \
 		  ClapTrap.cpp \
+		  ScavTrap.cpp \
+		  FragTrap.cpp \
 		  
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 DEPS	= $(OBJS:.o=.d)
 
-NAME	= claptrap
+NAME	= fragtrap
 
 all:	$(NAME)
 

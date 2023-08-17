@@ -14,7 +14,7 @@ SRCS	= main.cpp \
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 DEPS	= $(OBJS:.o=.d)
 
-NAME	= a.out
+NAME	= scavtrap
 
 all:	$(NAME)
 
