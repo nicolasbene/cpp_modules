@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:05:59 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/17 18:51:09 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:58:40 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 ClapTrap::ClapTrap(void)
 {
 	std::cout << "ClapTrap default constructor called\n";
-	_name = "John";
+	_name = "John Doe";
 	_health = 10;
 	_energy = 10;
 	_attack = 0;
@@ -36,7 +36,6 @@ ClapTrap::ClapTrap(const ClapTrap& claptrap)
 	*this = claptrap;
 }
 
-
 ClapTrap&	ClapTrap::operator=(const ClapTrap& claptrap)
 {
 	std::cout << "ClapTrap copy assginment operator called\n";
@@ -49,7 +48,7 @@ ClapTrap&	ClapTrap::operator=(const ClapTrap& claptrap)
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << "Destructor default called\n";
+	std::cout << "ClapTrap destructor called\n";
 }
 
 unsigned int	ClapTrap::getHealth(void) const

@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 18:15:29 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/17 18:56:22 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:04:28 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name)
 
 ScavTrap::ScavTrap(const ScavTrap& scavtrap): ClapTrap(scavtrap)
 {
-	std::cout << "ScavTrap clone contructor called\n";
+	std::cout << "ScavTrap clone constructor called\n";
 }
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& scavtrap)
@@ -54,7 +54,8 @@ void	ScavTrap::attack(const std::string& target)
 {
 	if (_energy == 0 || _health == 0)
 		std::cout << "ScavTrap " << _name << " cannot attack because it does not have enough energy !\n";
-	else {
+	else
+	{
 		_energy--;
 		std::cout << "ScavTrap " << _name << " attack " << target << ", causing " << _attack << " points of damage\n";
 	}

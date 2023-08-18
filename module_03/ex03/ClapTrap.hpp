@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:40:20 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/17 18:49:17 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:54:45 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <climits>
 
-class ClapTrap
+class	ClapTrap
 {
 	public:
 		ClapTrap(void);
@@ -30,10 +30,10 @@ class ClapTrap
 		void			takeDamage(unsigned int amount);
 		void			beRepaired(unsigned int amount);
 		unsigned int	getHealth(void) const;
-        unsigned int	getEnergy(void) const;
-        unsigned int	getAttack(void) const;
-        std::string		getName(void) const;
-		
+		unsigned int	getEnergy(void) const;
+		unsigned int	getAttack(void) const;
+		std::string		getName(void) const;
+
 	protected:
 		std::string		_name;
 		unsigned int	_health;

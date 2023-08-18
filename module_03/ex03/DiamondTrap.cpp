@@ -6,28 +6,28 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 19:45:36 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/17 19:46:01 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:42:44 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
 
-DiamondTrap::DiamondTrap(void): ScavTrap("John Doe_clap_name"), FragTrap("John Doe_clap_name")
+DiamondTrap::DiamondTrap(void): ClapTrap("John Doe_clap_name")
 {
 	std::cout << "DiamondTrap default constructor called\n";
 	_name = "John Doe";
-	_health = 100;
-	_energy = 50;
-	_attack = 30;
+	this->_health = FragTrap::_attack;
+	this->_energy = ScavTrap::_energy;
+	this->_attack = FragTrap::_attack;
 }
 
-DiamondTrap::DiamondTrap(std::string name): ScavTrap(name + "_clap_name"), FragTrap(name + "_clap_name")
+DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name")
 {
 	std::cout << "DiamondTrap constructor called\n";
-	_name = name;
-	_health = 100;
-	_energy = 50;
-	_attack = 30;
+	this->_name = name;
+	this->_health = FragTrap::_attack;
+	this->_energy = ScavTrap::_energy;
+	this->_attack = FragTrap::_attack;
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap& diamondtrap): ClapTrap(diamondtrap), ScavTrap(diamondtrap), FragTrap(diamondtrap)
