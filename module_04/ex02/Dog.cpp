@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 19:01:47 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/24 16:25:49 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/24 16:50:39 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,20 @@
 
 Dog::Dog(void)
 {
-	std::cout << "Dog default constructor called\n";
+	std::cout << "Dog default constructor\n";
 	_type = "Dog";
 	_brain = new Brain();
 }
 
-Dog::Dog(const Dog& dog): Animal(dog)
+Dog::Dog(const Dog& dog)
 {
-	std::cout << "Dog clone constructor called\n";
+	std::cout << "Dog clone constructor\n";
 	*this = dog;
-}
-
-Dog::Dog(std::string name)
-{
-	std::cout << "Dog name constructor called\n";
-	_name = name;
-	_type = "Dog";
-	_brain = new Brain();
 }
 
 Dog&	Dog::operator=(const Dog& dog)
 {
-	std::cout << "Dog copy assignment operator called\n";
+	std::cout << "Dog copy assignment operator\n";
 	_type = dog._type;
 	_brain = new Brain(*dog._brain);
 	return *this;
@@ -43,7 +35,7 @@ Dog&	Dog::operator=(const Dog& dog)
 
 Dog::~Dog(void)
 {
-	std::cout << "Dog destructor called\n";
+	std::cout << "Dog destructor\n";
 	delete _brain;
 }
 
@@ -55,14 +47,4 @@ Brain*	Dog::getBrain(void) const
 void	Dog::makeSound(void) const
 {
 	std::cout << "wouf wouf" << std::endl;
-}
-
-std::string	Dog::getIdea(int i) const
-{
-	return _ideas[i];
-}
-
-void	Dog::setIdea(int i, std::string idea)
-{
-	_ideas[i] = idea;
 }

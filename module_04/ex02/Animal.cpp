@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:35:46 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/23 19:48:26 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/24 17:04:21 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Animal&	Animal::operator=(const Animal& animal)
 
 Animal::~Animal(void)
 {
-	std::cout << "Animal desstructor\n";
+	std::cout << "Animal destructor\n";
 }
 
 void Animal::makeSound(void) const

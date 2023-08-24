@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 18:53:54 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/24 16:01:29 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/24 16:55:07 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ Cat::Cat(void)
 	_brain = new Brain();
 }
 
-Cat::Cat(const Cat& cat) : Animal(cat)
+Cat::Cat(const Cat& cat)
 {
-	std::cout << "Cat copy constructor\n";
+	std::cout << "Cat clone constructor\n";
 	*this = cat;
-}
-
-Cat::~Cat(void)
-{
-	std::cout << "Cat desstructor\n";
-	delete _brain;
 }
 
 Cat&	Cat::operator=(const Cat& cat)
 {
-	std::cout << "Cat copy assginment operator\n";
+	std::cout << "Cat copy assignment operator\n";
 	_type = cat._type;
 	_brain = new Brain(*cat._brain);
 	return *this;
+}
+
+Cat::~Cat(void)
+{
+	std::cout << "Cat destructor\n";
+	delete _brain;
 }
 
 Brain*	Cat::getBrain(void) const
@@ -46,15 +46,5 @@ Brain*	Cat::getBrain(void) const
 
 void	Cat::makeSound(void) const
 {
-	std::cout << "miaou" << std::endl;
-}
-
-std::string	Cat::getIdea(int i) const
-{
-	return _ideas[i];
-}
-
-void	Cat::setIdea(int i, std::string idea)
-{
-	_ideas[i] = idea;
+	std::cout << "miaouw" << std::endl;
 }

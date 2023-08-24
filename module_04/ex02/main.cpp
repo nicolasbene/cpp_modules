@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 17:10:33 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/08/24 16:29:52 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/08/24 17:10:21 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,32 @@
 
 int	main(void)
 {
-	Animal*	animals[100];
-	for (int i=0; i < 100; i++) {
-		if (i % 2)
-			animals[i] = new Cat();
-		else
-			animals[i] = new Dog();
+	{
+		const Animal*	dog = new Dog();
+		const Animal*	cat = new Cat();
+
+		delete dog;
+		delete cat;
+		std::cout << std::endl;
 	}
-	for (int i=0; i < 100; i++)
-		delete animals[i];
+	{
+		Dog	dog;
+		Dog	dog2(dog);
 
-	std::cout << std::endl;
+		dog.getBrain()->setIdea(0, "manger des chips au cacahuete");
+		dog2.getBrain()->setIdea(0, "lire un livre");
+		std::cout << dog.getBrain()->getIdea(0) << std::endl;
+		std::cout << dog2.getBrain()->getIdea(0) << std::endl;
+	}
+	{
+		std::cout << std::endl;
+		Cat	cat;
+		Cat	cat2(cat);
 	
-	std::cout << "----------Test copy & switch idea-----------" << std::endl;
-
-    Dog dog1("Philibert");
-
-    dog1.setIdea(0, "Croquette");
-    std::cout << "Philibert idea: " << dog1.getIdea(0) << std::endl;
-    Dog dog2(dog1);
-    std::cout << "Philibert idea: " << dog1.getIdea(0) << std::endl;
-    std::cout << "Copy idea: " << dog2.getIdea(0) << std::endl;
-    dog2.setIdea(0, "os");
-    std::cout << "Philibert idea: " << dog1.getIdea(0) << std::endl;
-    std::cout << "Copy idea: " << dog2.getIdea(0) << std::endl;
+		cat.getBrain()->setIdea(0, "jouer au foot");
+		cat2.getBrain()->setIdea(0, "rapper sur de la drill");
+		std::cout << cat.getBrain()->getIdea(0) << std::endl;
+		std::cout << cat2.getBrain()->getIdea(0) << std::endl;
+	}
 	return (0);
 }
