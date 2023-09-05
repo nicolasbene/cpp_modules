@@ -1,0 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   IMateriaSource.hpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/21 04:52:34 by jferrer-          #+#    #+#             */
+/*   Updated: 2023/09/05 14:24:04 by nibenoit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef IMATERIASOURCE_HPP
+#define IMATERIASOURCE_HPP
+
+#include <iostream>
+
+class Amateria;
+
+class IMateriaSource
+{
+	public:
+		virtual ~IMateriaSource() {};
+		virtual void learnMateria(AMateria*) = 0;
+		virtual AMateria* createMateria(std::string const & type) = 0;
+};
+
+#endif
