@@ -1,0 +1,4 @@
+Gerer seg fault de l ex03
+
+refait tous les .cpp pour utiliser _exemple et non les this
+Comprendre lequel est le plus opti
