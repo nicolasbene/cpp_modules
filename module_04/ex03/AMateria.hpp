@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AMateria.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jferrer- <jferrer-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 00:43:01 by jferrer-          #+#    #+#             */
-/*   Updated: 2022/09/22 02:40:17 by jferrer-         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:31:32 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class AMateria
 	public:
 		AMateria(const AMateria&);
 		AMateria& operator=(const AMateria&);
-		AMateria(std::string const &);
+		AMateria(std::string const & type);
 		virtual ~AMateria();
 
 		std::string const & getType() const;
