@@ -20,8 +20,8 @@
 class Character: public ICharacter
 {
 	private:
-		std::string	name;
-		AMateria*	slots[4];
+		std::string	_name;
+		AMateria*	_slots[4];
 
 	public:
 		Character(const std::string&);

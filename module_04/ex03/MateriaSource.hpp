@@ -20,7 +20,7 @@
 class MateriaSource: public IMateriaSource
 {
 	private:
-		AMateria*	slots[4];
+		AMateria*	_slots[4];
 
 	public:
 		MateriaSource();

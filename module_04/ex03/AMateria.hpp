@@ -20,7 +20,7 @@
 class AMateria
 {
 	private:
-		std::string type;
+		std::string _type;
 
 	public:
 		AMateria(const AMateria&);
