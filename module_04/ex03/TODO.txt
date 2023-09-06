@@ -1,6 +1,6 @@
 Gerer seg fault de l ex03
 
-refait tous les .cpp pour utiliser _exemple et non les this
 Comprendre lequel est le plus opti
 
-modification du constructeur de copie de AMateria,  faire un test avec copilot 
+modification du constructeur de copie de Character
+,  faire un test avec copilot 	

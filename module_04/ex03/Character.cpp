@@ -23,10 +23,24 @@ Character::Character(const Character& copy): _name(copy.getName())
 	for (int i = 0; i < 4; i++)
     {
         if (copy._slots[i])
-            _slots[i] = new AMateria(*(copy._slots[i])); // Effectuez une copie profonde si nécessaire.
+            _slots[i] = copy._slots[i]->clone();
         else
             _slots[i] = NULL;
     }
+}
+
+Character::Character(const Character& character)
+{
+	int	i;
+
+	i = 0;
+	while (i < NB_ITEMS) {
+		if (character.getItem(i))
+			_inventory[i] = character.getItem(i)->clone();
+		else
+			_inventory[i] = NULL;
+		i++;
+	}
 }
 
 
@@ -70,14 +84,6 @@ void	Character::equip(AMateria* materia)
 			break;
 		}
 	}
-	/*
-	int i = 0;
-
-	for (i = 0; i < 4 && __inv[i] != NULL; i++);
-
-	if (i < 4)
-		__inv[i] = m;
-		*/
 }
 
 void	Character::unequip(int index)
@@ -90,4 +96,11 @@ void	Character::use(int index, ICharacter& target)
 {
 	if (index >= 0 && index < 4 && _slots[index])
 		_slots[index]->use(target);
+}
+
+AMateria*	Character::getItem(int index) const
+{
+	if (index < 0 || index >= 4)
+		return NULL;
+	return _slots[index];
 }
