@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Character.cpp                                       :+:      :+:    :+:   */
+/*   Character.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jferrer- <jferrer-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 22:38:27 by jferrer-          #+#    #+#             */
-/*   Updated: 2022/09/20 22:38:38 by jferrer-         ###   ########.fr       */
+/*   Created: 2023/09/06 15:18:21 by nibenoit          #+#    #+#             */
+/*   Updated: 2023/09/06 15:18:23 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Character.hpp"
+#include "Character.h"
 
-Character::Character(const std::string& name): _name(name)
+Character::Character(void)
 {
-	for (int i = 0; i < 4; i++)
-		_slots[i] = NULL;
+	_name = "noone";
+	for (int i=0; i < NB_ITEMS; i++)
+		_inventory[i] = NULL;
 }
 
-Character::Character(const Character& copy): _name(copy.getName())
+Character::Character(std::string name)
 {
-	for (int i = 0; i < 4; i++)
-    {
-        if (copy._slots[i])
-            _slots[i] = copy._slots[i]->clone();
-        else
-            _slots[i] = NULL;
-    }
+	_name = name;
+	for (int i=0; i < NB_ITEMS; i++)
+		_inventory[i] = NULL;
 }
 
 Character::Character(const Character& character)
@@ -34,6 +31,7 @@ Character::Character(const Character& character)
 	int	i;
 
 	i = 0;
+	_name = character.getName();
 	while (i < NB_ITEMS) {
 		if (character.getItem(i))
 			_inventory[i] = character.getItem(i)->clone();
@@ -43,64 +41,62 @@ Character::Character(const Character& character)
 	}
 }
 
-
-
-Character::~Character()
+Character&	Character::operator=(const Character& character)
 {
-	for (int i = 0; i < 4; i++)
-		if (_slots[i])
-			delete(_slots[i]);
-}
+	int	i;
 
-Character & Character::operator=(const Character& op)
-{
-	if (this == &op)
-		return (*this);
-	_name = op.getName();
-	for (int i = 0; i < 4; i++)
-	{
-		if (_slots[i])
-			delete(_slots[i]);
-		if (op._slots[i])
-			_slots[i] = op._slots[i];
+	i = 0;
+	_name = character.getName();
+	while (i < NB_ITEMS) {
+		if (_inventory[i])
+			delete _inventory[i];
+		if (character.getItem(i))
+			_inventory[i] = character.getItem(i)->clone();
 		else
-			_slots[i] = NULL;
+			_inventory[i] = NULL;
+		i++;
 	}
-	return (*this);
+	return *this;
 }
 
-std::string const & Character::getName() const
+Character::~Character(void)
 {
-	return (_name);
+	for (int i=0; i < NB_ITEMS; i++) {
+		if (_inventory[i])
+			delete _inventory[i];
+	}
 }
 
-void	Character::equip(AMateria* materia)
+void	Character::equip(AMateria* m)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (_slots[i] == NULL)
-		{
-			_slots[i] = materia;
+	for (int i=0; i < NB_ITEMS; i++) {
+		if (_inventory[i] == NULL) {
+			_inventory[i] = m;
 			break;
 		}
 	}
 }
 
-void	Character::unequip(int index)
+void	Character::unequip(int idx)
 {
-	if (_slots[index] && index >= 0 && index < 4)
-		_slots[index] = NULL;
+	if (idx >= 0 && idx < NB_ITEMS)
+		_inventory[idx] = NULL;
 }
 
-void	Character::use(int index, ICharacter& target)
+void	Character::use(int idx, ICharacter& target)
 {
-	if (index >= 0 && index < 4 && _slots[index])
-		_slots[index]->use(target);
+	if (idx >= 0 && idx < NB_ITEMS && _inventory[idx] != NULL)
+		_inventory[idx]->use(target);
 }
 
-AMateria*	Character::getItem(int index) const
+const std::string&	Character::getName() const
 {
-	if (index < 0 || index >= 4)
+	return _name;
+}
+
+AMateria*	Character::getItem(int idx) const
+{
+	if (idx < 0 || idx >= NB_ITEMS)
 		return NULL;
-	return _slots[index];
+	return _inventory[idx];
 }

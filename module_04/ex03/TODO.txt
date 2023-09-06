@@ -1,6 +1,0 @@
-Gerer seg fault de l ex03
-
-Comprendre lequel est le plus opti
-
-modification du constructeur de copie de Character
-,  faire un test avec copilot 	

@@ -5,33 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 00:43:04 by jferrer-          #+#    #+#             */
-/*   Updated: 2023/09/05 17:37:27 by nibenoit         ###   ########.fr       */
+/*   Created: 2023/09/06 15:17:53 by nibenoit          #+#    #+#             */
+/*   Updated: 2023/09/06 15:17:58 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AMateria.hpp"
+#include "AMateria.h"
 
-AMateria::AMateria(const AMateria& copy): _type(copy._type) {}
-
-AMateria::AMateria(std::string const & type): _type(type) {}
-
-AMateria::~AMateria() {}
-
-AMateria & AMateria::operator=(const AMateria& op)
+AMateria::AMateria(const std::string& type)
 {
-	if (this == &op)
-		return (*this);
-	//this->type = op.type;
-	return (*this);
+	_type = type;
 }
 
-std::string const & AMateria::getType() const
+const std::string&	AMateria::getType(void) const
 {
 	return _type;
 }
 
-void AMateria::use(ICharacter& target)
+void	AMateria::use(ICharacter& target)
 {
-	(void)target;
+	std::cout << "* do nothing to " << target.getName() << " *" << std::endl;
 }

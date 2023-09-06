@@ -5,72 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 04:54:56 by jferrer-          #+#    #+#             */
-/*   Updated: 2023/09/05 14:27:15 by nibenoit         ###   ########.fr       */
+/*   Created: 2023/09/06 15:19:17 by nibenoit          #+#    #+#             */
+/*   Updated: 2023/09/06 15:19:18 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MateriaSource.hpp"
-#include "AMateria.hpp"
+#include "MateriaSource.h"
 
-MateriaSource::MateriaSource()
+MateriaSource::MateriaSource(void)
 {
-	for (int i = 0; i < 4; i++)
-		_slots[i] = NULL;
+	for (int i=0; i < NB_MATERIAS; i++)
+		_materias[i] = NULL;
 }
 
-MateriaSource::MateriaSource(const MateriaSource& copy)
+MateriaSource::MateriaSource(const MateriaSource& materiaSource)
+{	
+	*this = materiaSource;
+}
+
+MateriaSource::~MateriaSource(void)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (_slots[i])
-			delete(_slots[i]);
-		if (copy._slots[i])
-			_slots[i] = copy._slots[i];
-		else
-			_slots[i] = NULL;
+	for (int i=0; i < NB_MATERIAS; i++) {
+		if (_materias[i])
+			delete _materias[i];
+		_materias[i] = NULL;
 	}
 }
 
-MateriaSource::~MateriaSource()
+MateriaSource&	MateriaSource::operator=(const MateriaSource& materiaSource)
 {
-	for (int i = 0; i < 4; i++)
-		if (_slots[i])
-			delete(_slots[i]);
+	for (int i=0; i < NB_MATERIAS; i++)
+		_materias[i] = materiaSource.getMateria(i)->clone();
+	return *this;
 }
 
-MateriaSource & MateriaSource::operator=(const MateriaSource& op)
+void	MateriaSource::learnMateria(AMateria* materia)
 {
-	if (this == &op)
-		return (*this);
-	for (int i = 0; i < 4; i++)
-	{
-		if (_slots[i])
-			delete(_slots[i]);
-		if (op._slots[i])
-			_slots[i] = op._slots[i];
-		else
-			_slots[i] = NULL;
-	}
-	return (*this);
-}
-
-void MateriaSource::learnMateria(AMateria* newmateria)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		if (_slots[i] == NULL)
-		{
-			_slots[i] = newmateria;
+	for (int i=0; i < NB_MATERIAS; i++) {
+		if (_materias[i] == NULL) {
+			_materias[i] = materia;
 			break;
 		}
 	}
 }
 
-AMateria* MateriaSource::createMateria(std::string const & type)
+AMateria*	MateriaSource::createMateria(const std::string& type)
 {
-	for (int i = 0; i < 4; i++)
-		if (_slots[i] != NULL && _slots[i]->getType() == type)
-			return (_slots[i]->clone());
-	return (0);
+	for (int i=0; i < NB_MATERIAS; i++) {
+		if (_materias[i] && _materias[i]->getType() == type)
+			return _materias[i]->clone();
+	}
+	return NULL;
+}
+
+AMateria*	MateriaSource::getMateria(int i) const
+{
+	if (i < 0 || i >= NB_MATERIAS)
+		return NULL;
+	return _materias[i];
 }
