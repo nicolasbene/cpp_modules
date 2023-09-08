@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 16:07:10 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/07 18:32:00 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:49:23 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,18 @@ Form::Form(std::string const &name, int gradeToSign, int gradeToExecute): _name(
 		throw Form::GradeTooLowException();
 }
 
-Form::Form(Form const &src): _name(src._name), _signed(src._signed), _gradeToSign(src._gradeToSign), _gradeToExecute(src._gradeToExecute)
+Form::Form(Form const &src): _name(src._name), _gradeToSign(src._gradeToSign), _gradeToExecute(src._gradeToExecute)
 {
-	*this = src;
+	_signed = src.getSigned();
 }
-
-// Exceptions
-const char *Form::GradeTooLowException::what(void) const throw()
-{
-	return ("Grade too low");
-};
-
-const char *Form::GradeTooHighException::what(void) const throw()
-{
-	return ("Grade too high");
-};
 
 Form&	Form::operator=(Form const &rhs)
 {
-	this->_signed = rhs._signed;
-	return (*this);
+	_name = rhs._name;
+	_signed = rhs._signed;
+	_gradeToSign = rhs._gradeToSign;
+	_gradeToExecute = rhs._gradeToExecute;
+	return *this;
 }
 
 std::ostream&	operator<<(std::ostream& stream, const Form& form)
@@ -57,6 +49,23 @@ std::ostream&	operator<<(std::ostream& stream, const Form& form)
 	return stream;
 }
 
+// Exceptions
+const char *Form::GradeTooLowException::what(void) const throw()
+{
+	return ("Grade too low");
+};
+
+const char *Form::GradeTooHighException::what(void) const throw()
+{
+	return ("Grade too high");
+};
+
+const char *Form::FormNotSignedException::what(void) const throw()
+{
+	return ("Form not signed");
+};
+
+//getters
 bool	Form::getSigned(void) const
 {
 	return _signed;

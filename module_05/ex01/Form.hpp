@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:31:00 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/07 17:47:50 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:48:35 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ class Bureaucrat;
 class Form
 {
 	private:
-		const std::string	_name;
-		bool				_signed;
-		const int			_gradeToSign;
-		const int			_gradeToExecute;
+		std::string	_name;
+		bool		_signed;
+		int			_gradeToSign;
+		int			_gradeToExecute;
 
 	public:
 		Form();
