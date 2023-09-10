@@ -41,8 +41,8 @@ int	main(void)
 	{
 		std::cout << "\nTest the form sign function:\n";
 		Form	form("law contract", 10, 1);
-		Bureaucrat	b1("Victor", 9);
-		Bureaucrat	b2("Nathan", 11);
+		Bureaucrat	b1("Morgan", 9);
+		Bureaucrat	b2("Rose", 11);
 
 		b2.signForm(form);
 		b1.signForm(form);

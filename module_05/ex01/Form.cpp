@@ -12,11 +12,11 @@
 
 #include "Form.hpp"
 
-Form::Form(): _name("default"), _signed(false), _gradeToSign(150), _gradeToExecute(150) {}
+Form::Form(): _signed(false), _gradeToSign(150), _gradeToExecute(150), _name("default") {}
 
 Form::~Form() {}
 
-Form::Form(std::string const &name, int gradeToSign, int gradeToExecute): _name(name), _signed(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
+Form::Form(std::string const &name, int gradeToSign, int gradeToExecute): _signed(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute), _name(name)
 {
 	if (gradeToSign < 1 || gradeToExecute < 1)
 		throw Form::GradeTooHighException();
@@ -24,17 +24,14 @@ Form::Form(std::string const &name, int gradeToSign, int gradeToExecute): _name(
 		throw Form::GradeTooLowException();
 }
 
-Form::Form(Form const &src): _name(src._name), _gradeToSign(src._gradeToSign), _gradeToExecute(src._gradeToExecute)
+Form::Form(Form const &src): _gradeToSign(src._gradeToSign), _gradeToExecute(src._gradeToExecute), _name(src._name)
 {
 	_signed = src.getSigned();
 }
 
 Form&	Form::operator=(Form const &rhs)
 {
-	_name = rhs._name;
-	_signed = rhs._signed;
-	_gradeToSign = rhs._gradeToSign;
-	_gradeToExecute = rhs._gradeToExecute;
+	_signed = rhs.getSigned();
 	return *this;
 }
 
