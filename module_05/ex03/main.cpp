@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 10:58:57 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/11 11:36:22 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:31:23 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,41 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int	main(void)
 {
 	{
-		std::cout << "Test case Shrubbery Creation form, all working:" << std::endl;
-		ShrubberyCreationForm	form("home");
-		Bureaucrat				b("Granny", 100);
+		Intern	intern;
+		AForm*	form;
 
-		b.signForm(form);
-		b.executeForm(form);
-		std::cout << std::endl;
+		form = intern.makeForm("shrubbery creation", "Bender");
+		if (form)
+			delete form;
 	}
 	{
-		std::cout << "Test case Roboto Request form, all working:" << std::endl;
-		RobotomyRequestForm	form("Rose");
-		Bureaucrat			b("R2D2", 45);
+		Intern	intern;
+		AForm*	form;
 
-		b.signForm(form);
-		b.executeForm(form);
-		std::cout << std::endl;
+		form = intern.makeForm("robotomy request", "Bender");
+		if (form)
+			delete form;
 	}
 	{
-		std::cout << "Test case Presidential Pardon form, all working:" << std::endl;
-		PresidentialPardonForm form("Seb");
-		Bureaucrat	b("Damiand", 5);
+		Intern	intern;
+		AForm*	form;
 
-		b.signForm(form);
-		b.executeForm(form);
-		std::cout << std::endl;
+		form = intern.makeForm("presidential pardon", "Bender");
+		if (form)
+			delete form;
 	}
 	{
-		std::cout << "Test case permission to sign but not to execute" << std::endl;
-		PresidentialPardonForm form("Antho");
-		Bureaucrat	b("Antoine", 15);
+		Intern	intern;
+		AForm*	form;
 
-		b.signForm(form);
-		b.executeForm(form);
-		std::cout << std::endl;
+		form = intern.makeForm("some random form", "Bender");
+		if (form)
+			delete form;
 	}
-	{
-		std::cout << "Test case no enough permissions at all" << std::endl;
-		PresidentialPardonForm form("Prez Form");
-		Bureaucrat	b("Caro", 30);
-
-		b.signForm(form);
-		b.executeForm(form);
-	}
-
 	return (0);
 }

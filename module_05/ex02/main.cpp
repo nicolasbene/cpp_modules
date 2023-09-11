@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 10:58:57 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/11 10:59:07 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/11 11:36:22 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(void)
 	}
 	{
 		std::cout << "Test case Roboto Request form, all working:" << std::endl;
-		RobotomyRequestForm	form("Theo");
+		RobotomyRequestForm	form("Rose");
 		Bureaucrat			b("R2D2", 45);
 
 		b.signForm(form);
@@ -37,8 +37,8 @@ int	main(void)
 	}
 	{
 		std::cout << "Test case Presidential Pardon form, all working:" << std::endl;
-		PresidentialPardonForm form("Victor");
-		Bureaucrat	b("Arthur", 5);
+		PresidentialPardonForm form("Seb");
+		Bureaucrat	b("Damiand", 5);
 
 		b.signForm(form);
 		b.executeForm(form);
@@ -46,8 +46,8 @@ int	main(void)
 	}
 	{
 		std::cout << "Test case permission to sign but not to execute" << std::endl;
-		PresidentialPardonForm form("Maro");
-		Bureaucrat	b("Nathan", 15);
+		PresidentialPardonForm form("Antho");
+		Bureaucrat	b("Antoine", 15);
 
 		b.signForm(form);
 		b.executeForm(form);
@@ -55,8 +55,8 @@ int	main(void)
 	}
 	{
 		std::cout << "Test case no enough permissions at all" << std::endl;
-		PresidentialPardonForm form("Paul");
-		Bureaucrat	b("Nassim", 30);
+		PresidentialPardonForm form("Prez Form");
+		Bureaucrat	b("Caro", 30);
 
 		b.signForm(form);
 		b.executeForm(form);
