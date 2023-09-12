@@ -8,11 +8,12 @@ RM			= rm -rf
 OBJ_DIR		= bin
 
 SRCS	= main.cpp \
+		  Data.cpp \
 
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 DEPS	= $(OBJS:.o=.d)
 
-NAME	= bureaucrat
+NAME	= serialization
 
 VALGRIND	= valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all
 

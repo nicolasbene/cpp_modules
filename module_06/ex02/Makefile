@@ -8,12 +8,15 @@ RM			= rm -rf
 OBJ_DIR		= bin
 
 SRCS	= main.cpp \
-		  Types.cpp \
+		  A.cpp \
+		  B.cpp \
+		  C.cpp \
+		  Base.cpp \
 
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 DEPS	= $(OBJS:.o=.d)
 
-NAME	= bureaucrat
+NAME	= generate
 
 VALGRIND	= valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all
 
