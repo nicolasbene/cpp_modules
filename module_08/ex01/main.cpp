@@ -6,11 +6,13 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:44:48 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/14 16:44:58 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:01:24 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <vector>
+#include <cstdlib>
 #include "Span.hpp"
 
 int	main(void)
@@ -61,7 +63,7 @@ int	main(void)
 		try {
 			int shortest = sp.shortestSpan();
 			std::cout << "Shortest span: " << shortest << "\n";
-		} catch (Span::ListEmptyException& e) {
+		} catch (Span::NotEnoughSpaceException& e) {
 			std::cout << "Error: could not get shortest span because " << e.what() << "\n";
 		}
 	}
@@ -75,7 +77,7 @@ int	main(void)
 		try {
 			sp.addNumber(4);
 			std::cout << "Number added\n";
-		} catch (Span::ListFullException& e) {
+		} catch (Span::FullSpanException& e) {
 			std::cout << "Error: could not add a number to Span because " << e.what() << "\n";
 		}
 	}
