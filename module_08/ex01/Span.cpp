@@ -69,9 +69,3 @@ void	Span::insert(std::vector<int>::iterator begin, std::vector<int>::iterator e
 	else
 		throw Span::NotEnoughSpaceException();
 }
-
-// void	Span::insert(std::vector<int>::iterator begin, std::vector<int>::iterator end)
-// {
-// 	for (; begin != end; begin++)
-// 		this->addNumber(*begin);
-// }
