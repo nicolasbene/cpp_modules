@@ -8,7 +8,6 @@ RM			= rm -rf
 OBJ_DIR		= bin
 
 SRCS	= main.cpp \
-		  Span.cpp \
 
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 DEPS	= $(OBJS:.o=.d)
