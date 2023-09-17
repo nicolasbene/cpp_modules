@@ -5,6 +5,10 @@
 # include <stack>
 # include <deque>
 
+//faire des recherche sur la STL, class stack, class deque
+//comparer cette class avec celui de 42ccppsey 
+
+
 template <typename T>
 class MutantStack : public std::stack<T>
 {
