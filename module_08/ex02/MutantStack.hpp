@@ -5,17 +5,13 @@
 # include <stack>
 # include <deque>
 
-//faire des recherche sur la STL, class stack, class deque
-//comparer cette class avec celui de 42ccppsey 
-
-
 template <typename T>
 class MutantStack : public std::stack<T>
 {
 	public:
 		MutantStack() : std::stack<T>() {}
-		MutantStack(MutantStack const &other) : std::stack<T>(other) {}
-		MutantStack &operator=(MutantStack const &other) { std::stack<T>::operator=(other); return *this; }
+		MutantStack(MutantStack const &instance) : std::stack<T>(instance) {}
+		MutantStack &operator=(MutantStack const &rhs) { std::stack<T>::operator=(rhs); return *this; }
 		virtual ~MutantStack() {}
 
 		typedef typename std::stack<T>::container_type::iterator iterator;
