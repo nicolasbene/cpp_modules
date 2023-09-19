@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:44:48 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/14 19:01:24 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:27:18 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 		sp.addNumber(0);
 		sp.addNumber(10);
 		sp.addNumber(20);
-		sp.addNumber(30);
+		sp.addNumber(22);
 		sp.addNumber(40);
 		sp.addNumber(50);
 		sp.addNumber(60);

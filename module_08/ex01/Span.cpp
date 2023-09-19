@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:24:55 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/14 18:51:45 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:27:00 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,24 @@ void	Span::addNumber(int n)
 		throw Span::FullSpanException();
 }
 
-int	Span::shortestSpan(void)
+int Span::shortestSpan()
 {
-	if (this->_index < 2)
-		throw Span::NotEnoughSpaceException();
-	std::sort(this->_v.begin(), this->_v.end());
-	return (this->_v[1] - this->_v[0]);
+    if (this->_index < 2)
+        throw Span::NotEnoughSpaceException();
+	
+    std::sort(this->_v.begin(), this->_v.end());
+    int shortestSpan = this->_v[1] - this->_v[0];
+
+    for (size_t i = 2; i < this->_v.size(); ++i)
+    {
+        int currentSpan = this->_v[i] - this->_v[i - 1];
+        if (currentSpan < shortestSpan)
+            shortestSpan = currentSpan;
+    }
+
+    return (shortestSpan < 0) ? -shortestSpan : shortestSpan;
 }
+
 
 int	Span::longestSpan(void)
 {
