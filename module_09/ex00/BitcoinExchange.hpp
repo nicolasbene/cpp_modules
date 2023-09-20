@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:35:11 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/20 16:50:20 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/20 22:37:39 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ class BitcoinExchange
 		void	PrintOutput(std::string inputdate, float bitcoins);
 
 		//exceptions
-		class InvalidFormatException : public std::exception
+		class BitcoinExchangeException : public std::exception
 		{
 		public:
-			InvalidFormatException(const char* message) : message_(message) {}
+			BitcoinExchangeException(const char* message) : message_(message) {}
 
 			virtual const char* what() const throw()
 			{
@@ -52,18 +52,28 @@ class BitcoinExchange
 			const char* message_;
 		};
 
-		class InvalidRateException : public std::exception
+		class InvalidFileException : public BitcoinExchangeException
 		{
-			public:
-				InvalidRateException(const char* message) : message_(message) {}
+		public:
+			InvalidFileException(const char* message) : BitcoinExchangeException(message) {}
+		};
 
-				virtual const char* what() const throw()
-				{
-					return message_;
-				}
+		class InvalidDateFormatException : public BitcoinExchangeException
+		{
+		public:
+			InvalidDateFormatException(const char* message) : BitcoinExchangeException(message) {}
+		};
 
-			private:
-				const char* message_;
+		class InvalidRateFormatException : public BitcoinExchangeException
+		{
+		public:
+			InvalidRateFormatException(const char* message) : BitcoinExchangeException(message) {}
+		};
+
+		class InvalidPipeException : public BitcoinExchangeException
+		{
+		public:
+			InvalidPipeException(const char* message) : BitcoinExchangeException(message) {}
 		};
 };
 

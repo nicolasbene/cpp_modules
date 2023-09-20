@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:43:43 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/20 16:49:12 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/20 22:52:57 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	BitcoinExchange::ReadBase()
 	std::string     database;
 
 	input.open("./data.csv");
+	if (input.fail())
+    	throw InvalidFileException("Cannot open base file");
 	while (!input.eof())
 	{
 		input >> database;
@@ -46,36 +48,36 @@ void	BitcoinExchange::ReadBase()
 	}
 	input.close();
 }
-
-int	BitcoinExchange::Parsing(int year, int month, int day, std::string raate ,float rate, std::string line)
+int BitcoinExchange::Parsing(int year, int month, int day, std::string raate, float rate, std::string line)
 {
-	size_t idx = line.find("|");
-	if (line[idx + 1] != ' ' || line[idx - 1] != ' ')
-		throw InvalidFormatException("Invalid Pipe Format");
+    size_t idx = line.find("|");
+    if (line[idx + 1] != ' ' || line[idx - 1] != ' ')
+        throw InvalidPipeException("Invalid Pipe");
 
-	if (line.substr(4,1) != "-" && line.substr(7,1) != "-")
-		throw InvalidFormatException("Invalid Date Format");
+    if (line.substr(4, 1) != "-" && line.substr(7, 1) != "-")
+        throw InvalidDateFormatException("Invalid Date Format");
 
-	int count = 0;
-	for (size_t i = 0; i < raate.length(); i++)
-	{
-		if (raate[0] == '.')
-			throw InvalidRateException("Invalid Rate Format");
-		if (raate[i] == '.')
-			count++;
-		if (!(isdigit(raate[i])) && raate[i] != '.' && (count == 1 || count == 0))
-			throw InvalidRateException("Invalid Rate Format");
-	}
+    int count = 0;
+    for (size_t i = 0; i < raate.length(); i++)
+    {
+        if (raate[0] == '.')
+            throw InvalidRateFormatException("Invalid Rate Format");
+        if (raate[i] == '.')
+            count++;
+        if (!(isdigit(raate[i])) && raate[i] != '.' && (count == 1 || count == 0))
+            throw InvalidRateFormatException("Invalid Rate Format");
+    }
 
-	int month_limits[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	if (year < 2009 || month < 1 || month > 12)
-		throw InvalidFormatException("Invalid Date Format");
-	if (day > month_limits[month - 1] || day < 1)
-		throw InvalidFormatException("Out of month range");
-	if (rate < 0.00 || rate > 1000.00 )
-		throw InvalidRateException("Out of rate range");
-	return (0);
+    int month_limits[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (year < 2009 || month < 1 || month > 12)
+        throw InvalidDateFormatException("Invalid Date Format");
+    if (day > month_limits[month - 1] || day < 1)
+        throw InvalidDateFormatException("Out of month range");
+    if (rate < 0.00 || rate > 1000.00)
+        throw InvalidRateFormatException("Rate out of range");
+    return 0;
 }
+
 
 void	BitcoinExchange::PrintOutput(std::string inputdate, float bitcoins)
 {
@@ -109,11 +111,11 @@ void	BitcoinExchange::ReadInput(std::string file)
 	std::string line;
 
 	input.open(file.c_str());
-
 	if (input.fail())
-    	throw InvalidFormatException("Cannot open file");
+    	throw InvalidFileException("Cannot open input file");
 
-	while (!input.eof()) {
+	while (!input.eof())
+	{
 		std::string fulldate;
 		std::getline(input, line);
 
@@ -127,7 +129,7 @@ void	BitcoinExchange::ReadInput(std::string file)
 		d >> day;
 
 		if (line.length() < 14) {
-			std::cerr << "Invalid Format\n";
+			std::cerr << "Invalid Input Format : Input size too small\n";
 			continue;
 		}
 
@@ -152,7 +154,14 @@ void	BitcoinExchange::ReadInput(std::string file)
 
 		fulldate = dateStream.str();
 
-		if (Parsing(year, month, day, raate, bitcoins, line) == 0)
+		try { if (Parsing(year, month, day, raate, bitcoins, line) == 0)
 			PrintOutput(fulldate, bitcoins);
+		} catch (const BitcoinExchange::InvalidDateFormatException& e) {
+			std::cerr << "Invalid Date Format Exception: " << e.what() << '\n';
+		} catch (const BitcoinExchange::InvalidRateFormatException& e) {
+			std::cerr << "Invalid Rate Format Exception: " << e.what() << '\n';
+		} catch (const BitcoinExchange::InvalidPipeException& e) {
+			std::cerr << "Invalid Pipe Exception: " << e.what() << '\n';
+		}
 	}
 }
