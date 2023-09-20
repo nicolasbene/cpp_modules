@@ -6,38 +6,36 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:35:11 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/19 17:47:38 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:20:09 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
+#define BITCOINEXCHANGE_HPP
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <map>
+#include <iomanip>
 #include <string>
-#include <vector>
-#include <cctype>
+#include <cstdlib>
 
-class Bitcoin
+class BitcoinExchange
 {
-private:
-	std::map <std::string, float> data;
-	// int readFlag;
-public:
-	Bitcoin();
-	~Bitcoin();
-	Bitcoin(std::string dataPath);
-	Bitcoin& operator=(Bitcoin const &rhs);
-	Bitcoin(Bitcoin const &instance);
+    private:
+        std::map<std::string , float> _database;
+    public:
+        BitcoinExchange ();
+        BitcoinExchange (const BitcoinExchange &a);
+        ~BitcoinExchange ();
+        BitcoinExchange & operator = (const BitcoinExchange &a);
 
-	void setData(std::string date, float value);
-	std::map<std::string, float> getData();
-
-	void readInput(std::string inputPath);
-	std::vector<std::string> splitString(std::string str, char delimiter);
-
+        void    ReadBase(void);
+        void    PrintMap(std::map<std::string, float> mymap);
+        void    ReadInput(std::string file);
+        int     Parsing(int year, int month, int day, std::string raate, float rate, std::string line);
+        void    PrintOutput(std::string inputdate, float bitcoins);
 };
+
 #endif

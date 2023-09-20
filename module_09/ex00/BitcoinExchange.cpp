@@ -6,85 +6,176 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:43:43 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/19 18:06:52 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:46:49 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-//constructors & destructors
-Bitcoin::Bitcoin(void) {}
-Bitcoin::Bitcoin(Bitcoin const &instance) {*this = instance;}
-Bitcoin &Bitcoin::operator=(Bitcoin const &rhs) { (void)rhs, return (*this);}
-Bitcoin::~Bitcoin(void) {}
+BitcoinExchange::BitcoinExchange () {}
 
-Bitcoin::Bitcoin(std::string dataPath)
+BitcoinExchange::BitcoinExchange (const BitcoinExchange &instance)
 {
-	std::ifstream file(dataPath);
-	std::string line;
-	std::vector<std::string> splitLine;
-	std::string date;
-	float value;
-
-	if (file.is_open())
-	{
-		while (std::getline(file, line))
-		{
-			splitLine = splitString(line, ',');
-			date = splitLine[0];
-			value = std::stof(splitLine[1]);
-			setData(date, value);
-		}
-		file.close();
-	}
-	else
-		std::cout << "Unable to open file" << std::endl;
+	(void)instance;
+	*this = instance;
 }
 
+BitcoinExchange::~BitcoinExchange () {}
 
-//getters & setters
-void	Bitcoin::setData(std::string date, float value)
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs)
 {
-	data[date] = value;
+	(void)rhs;
+	return (*this);
 }
 
-std::map<std::string, float> Bitcoin::getData()
+void    BitcoinExchange::ReadBase()
 {
-	return (data);
+    std::ifstream   input;
+    std::string     database;
+
+    input.open("./data.csv");
+    while (!input.eof())
+    {
+        input >> database;
+        std::string fulldate = database.substr(0,10).erase(4,1).erase(6,1);
+        float      rate = 0.0;
+        std::stringstream convert;
+        convert << database.substr(11);
+        convert >> rate;
+        _database.insert(std::make_pair(fulldate,rate));
+    }
+    input.close();    
 }
 
-//member functions
-void	Bitcoin::readInput(std::string inputPath)
+int BitcoinExchange::Parsing(int year, int month, int day, std::string raate ,float rate, std::string line)
 {
-	std::ifstream file(inputPath);
-	std::string line;
-	std::vector<std::string> splitLine;
-	std::string date;
-	float value;
+    size_t idx = line.find("|");
+    if (line[idx + 1] != ' ' || line[idx - 1] != ' ')
+    {
+        std::cerr << "Invalid Pipe\n";
+        return (-1);
+    }
 
-	if (file.is_open())
-	{
-		while(std::getline(file, line))
-		{
-			splitLine = splitString(line, '|');
-			date = splitLine[0];
-			value = std::stof(splitLine[1]);
-			if (data.find(date) != data.end())
-				std::cout << date << " " << value << " " << data[date] << std::endl;
-		}
-		file.close();
-	}
-	else
-		std::cout << "Unable to open file" << std::endl;
+    if (line.substr(4,1) != "-" && line.substr(7,1) != "-")
+    {
+        std::cerr << "Invalid Date Format\n";
+        return (-1);
+    }
+
+    int count = 0;
+    for (size_t i = 0; i < raate.length(); i++)
+    {
+        if (raate[0] == '.')
+        {
+            std::cerr << "Invalid Rate Format\n";
+            return (-1);
+        }
+        if (raate[i] == '.')
+            count++;
+        if (!(isdigit(raate[i])) && raate[i] != '.' && (count == 1 || count == 0))
+        {
+            std::cerr << "Invalid Rate Format\n";
+            return (-1);
+        }
+    }
+
+    int month_limits[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (year < 2009 || month < 1 || month > 12)
+    {
+        std::cerr << "Invalid Date Format\n";
+        return (-1);
+    }
+    if (day > month_limits[month - 1] || day < 1)
+    {
+        std::cerr << "Out of month range\n";
+        return (-1);
+    }
+    if (rate < 0.00 || rate > 1000.00 )
+    {
+        std::cerr << "Rate out of range\n";
+        return (-1);
+    }
+    return (0);
 }
 
-std::vector<std::string> Bitcoin::splitString(std::string str, char delimiter)
+void    BitcoinExchange::PrintOutput(std::string inputdate, float bitcoins)
 {
-	std::vector<std::string> split;
-	std::string tmp;
-	std::stringstream ss(str);
+    std::map<std::string, float>::iterator itb = this->_database.begin();
+    std::map<std::string, float>::iterator ite = this->_database.end();
+    bool    flag = false;
 
-	while (std::getline(ss, tmp, delimiter))
-		split.push_back(tmp);
-	return (split);
+    for (; itb != ite; itb++)
+    {
+        if (itb->first == inputdate)
+        {
+            flag = true;
+            break;
+        }
+    }
+    if (flag == true)
+    {
+        std::cout << inputdate.insert(4,"-").insert(7,"-") << " => " << bitcoins << " = " <<  std::fixed << std::setprecision(2) << bitcoins * itb->second << "\n";
+        flag = false;
+    }
+    else
+    {
+        ite = this->_database.lower_bound(inputdate);
+        std::cout << inputdate.insert(4,"-").insert(7,"-") << " => " << bitcoins << " = " << std::fixed << std::setprecision(2) << bitcoins * ite->second << "\n";
+    }
 }
+
+void BitcoinExchange::ReadInput(std::string file) {
+        std::ifstream input;
+        std::string line;
+
+        input.open(file.c_str());
+
+        if (input.fail()) {
+            std::cerr << "Cannot Open File\n";
+            input.close();
+            exit(0);
+        }
+
+        while (!input.eof()) {
+            std::string fulldate;
+            std::getline(input, line);
+
+            int year, month, day = 0;
+            std::stringstream y, m, d;
+            y << line.substr(0, 4);
+            m << line.substr(5, 2);
+            d << line.substr(8, 2);
+            y >> year;
+            m >> month;
+            d >> day;
+
+            if (line.length() < 14) {
+                std::cerr << "Invalid Format\n";
+                continue;
+            }
+
+            std::string raate = line.substr(13, line.find('\0'));
+
+            float bitcoins = 0.00;
+            std::stringstream bit;
+            bit << raate;
+            bit >> bitcoins;
+
+            std::ostringstream dateStream;
+
+            if (month < 10 && day < 10) {
+                dateStream << year * 10 << month * 10 << day;
+            } else if (day < 10) {
+                dateStream << year << month * 10 << day;
+            } else if (month < 10) {
+                dateStream << year * 10 << month << day;
+            } else {
+                dateStream << year << month << day;
+            }
+
+            fulldate = dateStream.str();
+
+            if (Parsing(year, month, day, raate, bitcoins, line) == 0)
+                PrintOutput(fulldate, bitcoins);
+        }
+    }
