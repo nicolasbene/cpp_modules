@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:35:11 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/20 14:20:09 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/20 16:50:20 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,48 @@
 
 class BitcoinExchange
 {
-    private:
-        std::map<std::string , float> _database;
-    public:
-        BitcoinExchange ();
-        BitcoinExchange (const BitcoinExchange &a);
-        ~BitcoinExchange ();
-        BitcoinExchange & operator = (const BitcoinExchange &a);
+	private:
+		std::map<std::string , float> _database;
+	public:
+		BitcoinExchange ();
+		BitcoinExchange (const BitcoinExchange &a);
+		~BitcoinExchange ();
+		BitcoinExchange & operator = (const BitcoinExchange &a);
 
-        void    ReadBase(void);
-        void    PrintMap(std::map<std::string, float> mymap);
-        void    ReadInput(std::string file);
-        int     Parsing(int year, int month, int day, std::string raate, float rate, std::string line);
-        void    PrintOutput(std::string inputdate, float bitcoins);
+		void	ReadBase(void);
+		void	PrintMap(std::map<std::string, float> mymap);
+		void	ReadInput(std::string file);
+		int		Parsing(int year, int month, int day, std::string raate, float rate, std::string line);
+		void	PrintOutput(std::string inputdate, float bitcoins);
+
+		//exceptions
+		class InvalidFormatException : public std::exception
+		{
+		public:
+			InvalidFormatException(const char* message) : message_(message) {}
+
+			virtual const char* what() const throw()
+			{
+				return message_;
+			}
+
+		private:
+			const char* message_;
+		};
+
+		class InvalidRateException : public std::exception
+		{
+			public:
+				InvalidRateException(const char* message) : message_(message) {}
+
+				virtual const char* what() const throw()
+				{
+					return message_;
+				}
+
+			private:
+				const char* message_;
+		};
 };
 
 #endif

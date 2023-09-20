@@ -27,10 +27,10 @@ $(NAME):	$(OBJS)
 	$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME)
 
 run:		$(NAME)
-	./$(NAME)
+	./$(NAME) input.txt
 
 val:	$(NAME)
-	$(VALGRIND) ./$(NAME)
+	$(VALGRIND) ./$(NAME) input.txt
 
 clean:
 	$(RM) $(OBJ_DIR)
