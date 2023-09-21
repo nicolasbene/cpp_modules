@@ -5,28 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 16:33:08 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/21 15:32:54 by nibenoit         ###   ########.fr       */
+/*   Created: 2023/09/21 15:29:14 by nibenoit          #+#    #+#             */
+/*   Updated: 2023/09/21 16:45:34 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "BitcoinExchange.hpp"
+#include "RPN.hpp"
 
-int main(int ac, char *av[])
+int main(int argc, char* argv[])
 {
-	BitcoinExchange Bitcoin;
-	if (ac != 2)
-		std::cerr << "Usage: ./btc [inpu.txt]" << std::endl;
-	else
-	{
-		try
-		{
-			Bitcoin.ReadBase();
-			Bitcoin.ReadInput(av[1]);
-		} catch (const BitcoinExchange::InvalidFileException& e) {
-			std::cerr << "Invalid File Exception: " << e.what() << '\n';
-		}
-	}
-	return (0);
+    if (argc != 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <RPN_expression>" << std::endl;
+        return 1;
+    }
+
+    try
+    {
+        double result = evaluate_rpn(argv[1]);
+        std::cout << result << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 2;
+    }
+
+    return 0;
 }
