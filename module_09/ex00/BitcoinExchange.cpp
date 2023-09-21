@@ -6,7 +6,7 @@
 /*   By: nibenoit <nibenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:43:43 by nibenoit          #+#    #+#             */
-/*   Updated: 2023/09/20 22:52:57 by nibenoit         ###   ########.fr       */
+/*   Updated: 2023/09/21 11:52:35 by nibenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,51 +31,52 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs)
 void	BitcoinExchange::ReadBase()
 {
 	std::ifstream   input;
-	std::string     database;
+	std::string     line;
 
 	input.open("./data.csv");
 	if (input.fail())
-    	throw InvalidFileException("Cannot open base file");
+		throw InvalidFileException("Cannot open base file");
 	while (!input.eof())
 	{
-		input >> database;
-		std::string fulldate = database.substr(0,10).erase(4,1).erase(6,1);
-		float      rate = 0.0;
+		input >> line;
+		std::string fulldate = line.substr(0,10).erase(4,1).erase(6,1);
+		float	rate = 0.0;
 		std::stringstream convert;
-		convert << database.substr(11);
+		convert << line.substr(11);
 		convert >> rate;
 		_database.insert(std::make_pair(fulldate,rate));
 	}
 	input.close();
 }
+
 int BitcoinExchange::Parsing(int year, int month, int day, std::string raate, float rate, std::string line)
 {
-    size_t idx = line.find("|");
-    if (line[idx + 1] != ' ' || line[idx - 1] != ' ')
-        throw InvalidPipeException("Invalid Pipe");
+	size_t idx = line.find("|");
+	if (line[idx + 1] != ' ' || line[idx - 1] != ' ')
+		throw InvalidPipeException("Invalid Pipe");
 
-    if (line.substr(4, 1) != "-" && line.substr(7, 1) != "-")
-        throw InvalidDateFormatException("Invalid Date Format");
+	if (line.substr(4, 1) != "-" && line.substr(7, 1) != "-")
+		throw InvalidDateFormatException("Invalid Date Format");
 
-    int count = 0;
-    for (size_t i = 0; i < raate.length(); i++)
-    {
-        if (raate[0] == '.')
-            throw InvalidRateFormatException("Invalid Rate Format");
-        if (raate[i] == '.')
-            count++;
-        if (!(isdigit(raate[i])) && raate[i] != '.' && (count == 1 || count == 0))
-            throw InvalidRateFormatException("Invalid Rate Format");
-    }
+	int count = 0;
+	for (size_t i = 0; i < raate.length(); i++)
+	{
+		if (raate[0] == '.')
+			throw InvalidRateFormatException("Invalid Rate Format");
+		if (raate[i] == '.')
+			count++;
+		if (!(isdigit(raate[i])) && raate[i] != '.' && (count == 1 || count == 0))
+			throw InvalidRateFormatException("Invalid Rate Format");
+	}
 
-    int month_limits[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if (year < 2009 || month < 1 || month > 12)
-        throw InvalidDateFormatException("Invalid Date Format");
-    if (day > month_limits[month - 1] || day < 1)
-        throw InvalidDateFormatException("Out of month range");
-    if (rate < 0.00 || rate > 1000.00)
-        throw InvalidRateFormatException("Rate out of range");
-    return 0;
+	int month_limits[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	if (year < 2009 || month < 1 || month > 12)
+		throw InvalidDateFormatException("Out of year or month range");
+	if (day > month_limits[month - 1] || day < 1)
+		throw InvalidDateFormatException("Out of month or day range");
+	if (rate < 0.00 || rate > 1000.00)
+		throw InvalidRateFormatException("Rate out of range");
+	return 0;
 }
 
 
@@ -112,7 +113,7 @@ void	BitcoinExchange::ReadInput(std::string file)
 
 	input.open(file.c_str());
 	if (input.fail())
-    	throw InvalidFileException("Cannot open input file");
+		throw InvalidFileException("Cannot open input file");
 
 	while (!input.eof())
 	{
@@ -164,4 +165,5 @@ void	BitcoinExchange::ReadInput(std::string file)
 			std::cerr << "Invalid Pipe Exception: " << e.what() << '\n';
 		}
 	}
+	input.close();
 }
